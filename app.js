@@ -41,12 +41,25 @@ app.get('/compose', function(req, res){
 });
 
 app.get('/posts/:postName', function(req, res){
+
+  const requestedTitle = _.lowerCase(req.params.postName);
+
   for(var i=0; i<posts.length; i++){
-    if(_.lowerCase(posts[i].title) === _.lowerCase(req.params.postName)){
-      console.log("Match found!!");
+
+    const storedTitle = _.lowerCase(posts[i].title);
+
+    if(requestedTitle === storedTitle){
+      const requiredPost = posts[i];
+      res.render('post', {
+        title: posts[i].title,
+        content: posts[i].content
+      });
       break;
     }
   }
+
+
+
 });
 
 
